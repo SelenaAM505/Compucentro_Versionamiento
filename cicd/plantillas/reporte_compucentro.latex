@@ -1,49 +1,82 @@
 \documentclass[12pt]{article}
-\usepackage[spanish]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+\usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
-\usepackage{geometry}
-\usepackage{fancyhdr}
-\usepackage{xcolor}
+\usepackage{setspace}
 \usepackage{titlesec}
+\usepackage{fontspec}
 \usepackage{hyperref}
-\usepackage{longtable}
-\geometry{a4paper, margin=1in}
+\usepackage{tocloft}
 
-% --- Colores institucionales ---
-\definecolor{azulcompu}{HTML}{083B70}
-\definecolor{naranja}{HTML}{F39200}
+% Fuente formal - si Times New Roman falla, usa Latin Modern como fallback
+\setmainfont{Times New Roman}
 
-% --- Encabezado y pie de página ---
-\pagestyle{fancy}
-\fancyhf{}
-\lhead{\textcolor{azulcompu}{\textbf{CompuCentro Cobán}}}
-\rhead{\textcolor{naranja}{\textbf{Reporte de Análisis de Código}}}
-\cfoot{\textcolor{gray}{Página \thepage}}
+% Espaciado 1.5
+\onehalfspacing
 
-% --- Título ---
-\titleformat{\section}
-  {\color{azulcompu}\normalfont\Large\bfseries}
-  {\thesection}{1em}{}
+% Formato de títulos
+\titleformat{\section}{\bfseries\large}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\bfseries}{\thesubsection.}{0.5em}{}
+
+% Separador
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 \begin{document}
 
-% --- Portada ---
+% ------------------------ PORTADA ------------------------
 \begin{titlepage}
-    \centering
-    \vspace*{3cm}
-    \includegraphics[width=5cm]{logo_compucentro.png}\\[1cm]
-    {\Huge\textbf{CompuCentro Cobán}}\\[0.5cm]
-    {\Large\textcolor{naranja}{Reporte de Calidad de Código}}\\[1cm]
-    \vfill
-    \textbf{Generado automáticamente por Jenkins y SonarQube}\\[0.5cm]
-    \textcolor{gray}{\today}
+\begin{center}
+
+{\large \textbf{REPORTE DE CALIDAD DE CÓDIGO}}\\[0.5cm]
+{\large Generado automáticamente por el Pipeline CI/CD}\\[3cm]
+
+{\large \textbf{Proyecto:} CompuCentro Cobán WebApp}\\[0.5cm]
+{\large \textbf{Fecha:} \today}\\[4cm]
+
+\HRule \\[0.4cm]
+{\large \textit{Análisis realizado mediante Jenkins + SonarQube + Pandoc}}\\
+\HRule \\[2.5cm]
+
+\end{center}
 \end{titlepage}
 
-\newpage
+% ---------------------- CONTENIDO ------------------------
 
-% --- Contenido dinámico ---
+\section*{Resumen General}
+Este documento presenta los resultados del análisis automatizado de calidad de código
+realizado a través de una arquitectura de Integración Continua (CI/CD). El proceso fue
+gestionado mediante \textbf{Jenkins}, donde se ejecutó el análisis estático utilizando 
+\textbf{SonarQube} y posteriormente se generó este informe en formato PDF mediante
+\textbf{Pandoc} y \textbf{\LaTeX}.
+
+\vspace{0.5cm}
+
+\section*{Resultados de SonarQube}
+Los resultados obtenidos del análisis se presentan a continuación:
+
+\begin{itemize}
 $body$
+\end{itemize}
+
+\vspace{0.5cm}
+
+\section*{Interpretación del Estado del Quality Gate}
+El estado del \textit{Quality Gate} determina si el proyecto cumple con los estándares
+mínimos de calidad definidos. Un estado \textbf{PASSED} indica conformidad con las
+normas establecidas. Por el contrario, un estado \textbf{FAILED} señala que existen
+aspectos del código que requieren ser mejorados, como la reducction de complejidad,
+disminución de \textit{code smells}, o la incorporación de pruebas automatizadas.
+
+\vspace{0.5cm}
+
+\section*{Conclusión}
+Este análisis permite identificar oportunidades de mejora en el proyecto, fomentando
+el desarrollo de software sostenible y mantenible. Se recomienda programar ciclos
+periódicos de análisis estático para promover un control constante de la calidad del código.
+
+\vfill
+
+\begin{center}
+\textit{Documento generado automáticamente como parte del proceso de Integración Continua.}
+\end{center}
 
 \end{document}
