@@ -2,28 +2,31 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# Instalar dependencias necesarias para SonarScanner, Node.js y Docker
+# 🔧 Instalar dependencias necesarias (SonarScanner, Node.js, Docker, Pandoc, jq)
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
     git \
     docker.io \
+    jq \
+    pandoc \
     openjdk-21-jre-headless \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar Node.js 18 LTS (recomendado por SonarQube)
+# 🟢 Instalar Node.js 18 LTS (recomendado por SonarQube)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get update && apt-get install -y nodejs && \
     node -v && npm -v
 
-# Descargar e instalar Sonar Scanner (versión estable)
+# 📦 Descargar e instalar Sonar Scanner (versión estable)
 RUN curl -sSLo /tmp/sonar.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip && \
     unzip /tmp/sonar.zip -d /opt && \
     mv /opt/sonar-scanner-* /opt/sonar-scanner && \
     ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner && \
     rm -rf /tmp/sonar.zip
 
-# Confirmar instalación de Node.js y SonarScanner
-RUN node -v && npm -v && sonar-scanner --version || true
+# ✅ Confirmar instalación final
+RUN node -v && npm -v && sonar-scanner --version && pandoc -v && jq --version || true
 
+# Cambiar de nuevo al usuario Jenkins (buena práctica)
 USER jenkins

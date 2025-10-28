@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{longtable}
+\geometry{a4paper, margin=1in}
+
+% --- Colores institucionales ---
+\definecolor{azulcompu}{HTML}{083B70}
+\definecolor{naranja}{HTML}{F39200}
+
+% --- Encabezado y pie de página ---
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{azulcompu}{\textbf{CompuCentro Cobán}}}
+\rhead{\textcolor{naranja}{\textbf{Reporte de Análisis de Código}}}
+\cfoot{\textcolor{gray}{Página \thepage}}
+
+% --- Título ---
+\titleformat{\section}
+  {\color{azulcompu}\normalfont\Large\bfseries}
+  {\thesection}{1em}{}
+
+\begin{document}
+
+% --- Portada ---
+\begin{titlepage}
+    \centering
+    \vspace*{3cm}
+    \includegraphics[width=5cm]{logo_compucentro.png}\\[1cm]
+    {\Huge\textbf{CompuCentro Cobán}}\\[0.5cm]
+    {\Large\textcolor{naranja}{Reporte de Calidad de Código}}\\[1cm]
+    \vfill
+    \textbf{Generado automáticamente por Jenkins y SonarQube}\\[0.5cm]
+    \textcolor{gray}{\today}
+\end{titlepage}
+
+\newpage
+
+% --- Contenido dinámico ---
+$body$
+
+\end{document}
