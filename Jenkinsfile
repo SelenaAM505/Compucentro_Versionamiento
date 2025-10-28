@@ -6,12 +6,13 @@ pipeline {
         PROJECT_DIR             = "www/CompuCentro_Coban"
         REPORT_DIR              = "reports"
         REPORT_FILE             = "Reporte_SonarQube_CompuCentro.pdf"
-        SONARQUBE_SERVER        = "SonarQubeServer"            // Configuración global de Jenkins
+        SONARQUBE_SERVER        = "SonarQubeServer"
         SONARQUBE_PROJECT_KEY   = "compucentro"
-        SONARQUBE_TOKEN         = credentials('sonarqube-token') // Usa el ID del Secret Text en Jenkins
+        SONARQUBE_TOKEN         = credentials('sonarqube-token')
     }
 
     stages {
+
         stage('Clonar Repositorio') {
             steps {
                 echo "📦 Clonando el repositorio de GitHub..."
@@ -90,7 +91,7 @@ pipeline {
 
                     curl -s -u ${SONARQUBE_TOKEN}: \\
                         "http://sonarqube:9000/api/measures/component?component=${SONARQUBE_PROJECT_KEY}&metricKeys=bugs,vulnerabilities,code_smells,duplicated_lines_density,coverage" \\
-                        | jq -r '.component.measures[] | "- **\\\\(.metric):** \\\\(.value)"' >> ${REPORT_DIR}/reporte.md
+                        | jq -r '.component.measures[] | "\\\\item **\\\\(.metric):** \\\\(.value)"' >> ${REPORT_DIR}/reporte.md
 
                     pandoc ${REPORT_DIR}/reporte.md \\
                         --from markdown \\
