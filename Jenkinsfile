@@ -40,8 +40,8 @@ pipeline {
             steps {
                 script {
                     echo "⏳ Esperando resultados de calidad de SonarQube..."
-                    timeout(time: 15, unit: 'MINUTES') { // ⬅️ se aumentó el tiempo
-                        waitForQualityGate abortPipeline: false // ⬅️ no aborta, solo continúa
+                    timeout(time: 15, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: false
                     }
                 }
             }
@@ -84,7 +84,7 @@ pipeline {
 
                 curl -s -u ${SONARQUBE_TOKEN}: \
                     "http://sonarqube:9000/api/measures/component?component=${SONARQUBE_PROJECT_KEY}&metricKeys=bugs,vulnerabilities,code_smells,duplicated_lines_density,coverage" \
-                    | jq -r '.component.measures[] | "- **\(.metric):** \(.value)"' >> ${REPORT_DIR}/reporte.md
+                    | jq -r '.component.measures[] | "- **\\\\(.metric):** \\\\(.value)"' >> ${REPORT_DIR}/reporte.md
 
                 pandoc ${REPORT_DIR}/reporte.md \
                     --from markdown \
