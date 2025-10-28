@@ -1,30 +1,26 @@
 \documentclass[12pt]{article}
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{graphicx}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
 \usepackage{setspace}
-\usepackage{titlesec}
-\usepackage{fontspec}
-\usepackage{hyperref}
-\usepackage{tocloft}
-
-% Fuente formal - si Times New Roman falla, usa Latin Modern como fallback
-\setmainfont{Times New Roman}
-
-% Espaciado 1.5
 \onehalfspacing
+
+\usepackage{hyperref}
+\usepackage{titlesec}
 
 % Formato de títulos
 \titleformat{\section}{\bfseries\large}{\thesection.}{0.5em}{}
-\titleformat{\subsection}{\bfseries}{\thesubsection.}{0.5em}{}
-
-% Separador
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection.}{0.5em}{}
 
 \begin{document}
 
-% ------------------------ PORTADA ------------------------
+% ------------------ PORTADA ------------------
 \begin{titlepage}
-\begin{center}
+\centering
 
 {\large \textbf{REPORTE DE CALIDAD DE CÓDIGO}}\\[0.5cm]
 {\large Generado automáticamente por el Pipeline CI/CD}\\[3cm]
@@ -32,51 +28,41 @@
 {\large \textbf{Proyecto:} CompuCentro Cobán WebApp}\\[0.5cm]
 {\large \textbf{Fecha:} \today}\\[4cm]
 
-\HRule \\[0.4cm]
-{\large \textit{Análisis realizado mediante Jenkins + SonarQube + Pandoc}}\\
-\HRule \\[2.5cm]
+\rule{\linewidth}{0.5mm}\\[0.4cm]
+{\large \textit{Jenkins + SonarQube + Pandoc}}\\
+\rule{\linewidth}{0.5mm}\\[2.5cm]
 
-\end{center}
 \end{titlepage}
 
-% ---------------------- CONTENIDO ------------------------
+% ------------------ CONTENIDO ------------------
 
 \section*{Resumen General}
 Este documento presenta los resultados del análisis automatizado de calidad de código
 realizado a través de una arquitectura de Integración Continua (CI/CD). El proceso fue
-gestionado mediante \textbf{Jenkins}, donde se ejecutó el análisis estático utilizando 
-\textbf{SonarQube} y posteriormente se generó este informe en formato PDF mediante
-\textbf{Pandoc} y \textbf{\LaTeX}.
-
-\vspace{0.5cm}
+gestionado mediante \textbf{Jenkins}, se ejecutó el análisis estático empleando 
+\textbf{SonarQube} y posteriormente se generó este informe mediante
+\textbf{Pandoc} y \LaTeX.
 
 \section*{Resultados de SonarQube}
-Los resultados obtenidos del análisis se presentan a continuación:
+A continuación se listan los indicadores obtenidos:
 
 \begin{itemize}
 $body$
 \end{itemize}
 
-\vspace{0.5cm}
-
-\section*{Interpretación del Estado del Quality Gate}
-El estado del \textit{Quality Gate} determina si el proyecto cumple con los estándares
-mínimos de calidad definidos. Un estado \textbf{PASSED} indica conformidad con las
-normas establecidas. Por el contrario, un estado \textbf{FAILED} señala que existen
-aspectos del código que requieren ser mejorados, como la reducction de complejidad,
-disminución de \textit{code smells}, o la incorporación de pruebas automatizadas.
-
-\vspace{0.5cm}
+\section*{Interpretación}
+Un estado \textbf{PASSED} indica que el proyecto cumple con las reglas de calidad.
+Un estado \textbf{FAILED} implica que deben corregirse aspectos del código, tales como:
+mantenibilidad, complejidad, seguridad o duplicación.
 
 \section*{Conclusión}
-Este análisis permite identificar oportunidades de mejora en el proyecto, fomentando
-el desarrollo de software sostenible y mantenible. Se recomienda programar ciclos
-periódicos de análisis estático para promover un control constante de la calidad del código.
+Este informe permite identificar áreas de mejora en el software, promoviendo buenas
+prácticas de desarrollo y calidad continua. Se recomienda realizar análisis periódicos
+como parte del ciclo de vida de desarrollo.
 
 \vfill
-
 \begin{center}
-\textit{Documento generado automáticamente como parte del proceso de Integración Continua.}
+\textit{Documento generado automáticamente por el pipeline CI/CD.}
 \end{center}
 
 \end{document}
