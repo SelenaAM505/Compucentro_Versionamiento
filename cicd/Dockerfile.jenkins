@@ -2,7 +2,7 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# 🔧 Instalar dependencias necesarias (SonarScanner, Node.js, Docker, Pandoc, jq)
+# 🔧 Instalar dependencias necesarias (SonarScanner, Node.js, Docker, Pandoc, jq, texlive-xetex)
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     docker.io \
     jq \
     pandoc \
+    texlive-xetex \
     openjdk-21-jre-headless \
     && rm -rf /var/lib/apt/lists/*
 
