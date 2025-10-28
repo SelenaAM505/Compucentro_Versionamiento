@@ -30,16 +30,17 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <nav id="nav">
       <ul>
         <li><a href="../index.html">Inicio</a></li>
-        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="nosotros.php">Nosotros</a></li>
         <li><a href="cursos.php">Cursos</a></li>
-        <li><a href="convocatorias.html">Convocatorias</a></li>
+        <li><a href="convocatorias.php">Convocatorias</a></li>
         <li><a href="preinscripcion.html">Preinscríbete</a></li>
-        <li><a href="galeria.html" class="active">Galería</a></li>
+        <li><a href="galeria.php" class="active">Galería</a></li>
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
     <div class="menu-toggle" id="menu-toggle">☰</div>
   </header>
+
 <main>
 <section class="galeria">
   <h2 class="titulo">Nuestra Galería</h2>
@@ -53,11 +54,42 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   </div>
 </section>
+
+  <!-- Modal Carrusel -->
+  <div class="modal" id="modal">
+    <span class="cerrar" id="cerrar">&times;</span>
+    <div class="modal-contenedor">
+      <img class="modal-contenido" id="imgModal">
+      <div class="caption" id="caption"></div>
+      <div class="nav-arrows">
+        <span id="prev">&#10094;</span>
+        <span id="next">&#10095;</span>
+      </div>
+    </div>
+    <!-- Thumbnails -->
+    <div class="miniaturas" id="miniaturas"></div>
+  </div>
+
 </main>
 
-<footer class="footer-elegante">
-  <!-- tu footer tal como lo tienes -->
-</footer>
+  <!-- FOOTER -->
+  <footer class="footer-elegante">
+  <div class="onda-superior">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150">
+      <path fill="#063b70"
+        d="M0,64L60,74.7C120,85,240,107,360,117.3C480,128,600,128,720,122.7C840,117,960,107,1080,101.3C1200,96,1320,96,1380,96L1440,96L1440,0L0,0Z">
+      </path>
+    </svg>
+  </div>
+  <div class="contenido-footer">
+    <h3>Contáctanos</h3>
+  <p><i class="fa fa-phone"></i>+502 4650 4401</p>
+  <p><i class="fa fa-envelope"></i> compucentrocoban@gmail.com</p>
+  </div>
+    <div class="copyright">
+      <p>&copy; 2025  Trabajo Educativo SVE | Todos los derechos reservados</p>
+    </div>
+  </footer>
 
 <script src="../JS/layout.js"></script>
 <script src="../JS/galeria.js"></script>

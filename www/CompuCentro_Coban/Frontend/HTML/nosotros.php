@@ -62,12 +62,13 @@ $listaValores = array_filter(array_map('trim', explode("\n", $valores['descripci
       <li><a href="../index.html">Inicio</a></li>
       <li><a href="nosotros.php" class="active">Nosotros</a></li>
       <li><a href="cursos.php">Cursos</a></li>
-      <li><a href="convocatorias.html">Convocatorias</a></li>
+      <li><a href="convocatorias.php">Convocatorias</a></li>
       <li><a href="preinscripcion.html">Preinscríbete</a></li>
-      <li><a href="galeria.html">Galería</a></li>
+      <li><a href="galeria.php">Galería</a></li>
       <li><a href="contacto.html">Contacto</a></li>
     </ul>
   </nav>
+      <div class="menu-toggle" id="menu-toggle">☰</div>
 </header>
 
 <!-- PRESENTACIÓN -->
@@ -96,7 +97,7 @@ $listaValores = array_filter(array_map('trim', explode("\n", $valores['descripci
   <h2><?= htmlspecialchars($valores['titulo']) ?></h2>
   <div class="grid-valores">
     <?php foreach ($listaValores as $valor): ?>
-      <div class="valor"><i class="fas fa-check-circle"></i> <?= htmlspecialchars($valor) ?></div>
+      <div class="valor"><i class="fas fa-users"></i> <?= htmlspecialchars($valor) ?></div>
     <?php endforeach; ?>
   </div>
 </section>
@@ -115,16 +116,53 @@ $listaValores = array_filter(array_map('trim', explode("\n", $valores['descripci
   </div>
 </section>
 
-<!-- EQUIPO (más adelante lo haremos dinámico) -->
+<!-- EQUIPO -->
 <section class="equipo reveal">
   <h2>Conoce a Nuestro Equipo</h2>
   <div class="cards-equipo">
-    <div class="miembro"><img src="../IMG/Nosotros/19.jpg"><h3>Directora Académico</h3></div>
-    <div class="miembro"><img src="../IMG/Nosotros/2.jpg"><h3>Administradora educativa</h3></div>
-    <div class="miembro"><img src="../IMG/Nosotros/3.jpg"><h3>Instructor</h3></div>
-    <div class="miembro"><img src="../IMG/Nosotros/IMG_9657.JPG"><h3>Instructora</h3></div>
+
+    <div class="miembro" data-rol="Directora Académica">
+      <img src="../IMG/Nosotros/19.jpg" alt="Directora">
+      <h3>Directora Académico</h3>
+    </div>
+
+    <div class="miembro" data-rol="Administradora educativa">
+      <img src="../IMG/Nosotros/2.jpg" alt="Administradora">
+      <h3>Administradora educativa</h3>
+    </div>
+
+    <div class="miembro" data-rol="Instructor">
+      <img src="../IMG/Nosotros/profe.jpg" alt="Profesor">
+      <h3>Instructor</h3>
+    </div>
+
+    <div class="miembro" data-rol="Instructora">
+      <img src="../IMG/Nosotros/IMG_9657.JPG" alt="Instructora">
+      <h3>Instructora</h3>
+    </div>
+
   </div>
 </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer-elegante">
+  <div class="onda-superior">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150">
+      <path fill="#063b70"
+        d="M0,64L60,74.7C120,85,240,107,360,117.3C480,128,600,128,720,122.7C840,117,960,107,1080,101.3C1200,96,1320,96,1380,96L1440,96L1440,0L0,0Z">
+      </path>
+    </svg>
+  </div>
+  <div class="contenido-footer">
+    <h3>Contáctanos</h3>
+  <p><i class="fa fa-phone"></i>+502 4650 4401</p>
+  <p><i class="fa fa-envelope"></i> compucentrocoban@gmail.com</p>
+  </div>
+    <div class="copyright">
+      <p>&copy; 2025  Trabajo Educativo SVE | Todos los derechos reservados</p>
+    </div>
+  </footer>
 
 <script src="../JS/layout.js"></script>
 <script src="../JS/nosotros.js"></script>

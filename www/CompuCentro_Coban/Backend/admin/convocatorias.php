@@ -8,7 +8,8 @@ $convocatorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/sidebar.php'; ?>
-<link rel="stylesheet" href="assets/css/contenido.css">
+
+<link rel="stylesheet" href="assets/css/contenido.css"><!--llama archivo de estilos-->
 
 <div class="content">
     <h2>Administrar Convocatorias</h2>

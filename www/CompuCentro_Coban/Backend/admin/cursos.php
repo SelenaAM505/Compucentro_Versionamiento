@@ -10,6 +10,7 @@ require_once 'src/conexiondb.php';
   <title>Gestión de Cursos | CompuCentro</title>
 
   <!-- Estilos -->
+  <link rel="icon" href="assets/img/logo_compucentr.png" type="image/x-icon">
   <link rel="stylesheet" href="assets/css/modulos.css">
   <link rel="stylesheet" href="assets/css/cursos.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">

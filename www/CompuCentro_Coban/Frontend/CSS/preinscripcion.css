@@ -100,10 +100,6 @@ body {
   to { opacity: 1; transform: translateX(0); }
 }
 
-
-
-
-
 /* ===== BORDE ANIMADO ===== */
 .form-container::before {
   content: "";
@@ -281,6 +277,12 @@ button {
   transform: translateY(-3px);
 }
 
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
 /* ===== ANIMACIÓN GENERAL ===== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-15px); }
@@ -314,3 +316,5 @@ button {
     font-size: 1.3rem;
   }
 }
+
+

@@ -15,11 +15,18 @@ function crearMailer(): PHPMailer {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'tutyose77@gmail.com'; // Tu correo
-    $mail->Password = 'ivskowvscglgksef'; // clave de aplicación (no la normal)
+    $mail->Username = 'tutyose77@gmail.com'; // tu correo
+    $mail->Password = 'ivskowvscglgksef';   // clave de aplicación (no la normal)
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
+
+    // 💡 Importante: codificación correcta y sin debug visible
+    $mail->CharSet = 'UTF-8';
+    $mail->Encoding = 'base64';
+    $mail->SMTPDebug = 0; // Desactiva el log SMTP (para que el usuario no vea nada raro)
+
     $mail->setFrom('tutyose77@gmail.com', 'Formulario Web CompuCentro');
     return $mail;
 }
 ?>
+

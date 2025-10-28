@@ -2,7 +2,7 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# 🔧 Instalar dependencias necesarias (SonarScanner, Node.js, Docker, Pandoc, jq, texlive-xetex)
+# 🔧 Instalar dependencias necesarias (SonarScanner, Node.js, Docker, Pandoc, jq, LaTeX con soporte para español)
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
     jq \
     pandoc \
     texlive-xetex \
+    texlive-latex-extra \
+    texlive-lang-spanish \
     openjdk-21-jre-headless \
     && rm -rf /var/lib/apt/lists/*
 
@@ -26,7 +28,7 @@ RUN curl -sSLo /tmp/sonar.zip https://binaries.sonarsource.com/Distribution/sona
     ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner && \
     rm -rf /tmp/sonar.zip
 
-# ✅ Confirmar instalación final
+# ✅ Verificación de versiones instaladas
 RUN node -v && npm -v && sonar-scanner --version && pandoc -v && jq --version || true
 
 # Cambiar de nuevo al usuario Jenkins (buena práctica)

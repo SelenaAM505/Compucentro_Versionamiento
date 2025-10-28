@@ -49,10 +49,10 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <nav id="nav">
       <ul>
         <li><a href="../index.html">Inicio</a></li>
-        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="nosotros.php">Nosotros</a></li>
         <li><a href="cursos.php" class="active">Cursos</a></li>
-        <li><a href="convocatorias.html">Convocatorias</a></li>
-        <li><a href="galeria.html">Galería</a></li>
+        <li><a href="convocatorias.php">Convocatorias</a></li>
+        <li><a href="galeria.php">Galería</a></li>
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
@@ -113,20 +113,20 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <!-- FOOTER -->
   <footer class="footer-elegante">
-    <div class="onda-superior">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150">
-        <path fill="#063b70" 
-          d="M0,64L60,74.7C120,85,240,107,360,117.3C480,128,600,128,720,122.7C840,117,960,107,1080,101.3C1200,96,1320,96,1380,96L1440,96L1440,0L0,0Z">
-        </path>
-      </svg>
-    </div>
-    <div class="contenido-footer">
-      <h3>Contáctanos</h3>
-      <p><i class="fa fa-phone"></i> +502 4650 4401</p>
-      <p><i class="fa fa-envelope"></i> compucentrocoban@gmail.com</p>
-    </div>
+  <div class="onda-superior">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150">
+      <path fill="#063b70"
+        d="M0,64L60,74.7C120,85,240,107,360,117.3C480,128,600,128,720,122.7C840,117,960,107,1080,101.3C1200,96,1320,96,1380,96L1440,96L1440,0L0,0Z">
+      </path>
+    </svg>
+  </div>
+  <div class="contenido-footer">
+    <h3>Contáctanos</h3>
+  <p><i class="fa fa-phone"></i>+502 4650 4401</p>
+  <p><i class="fa fa-envelope"></i> compucentrocoban@gmail.com</p>
+  </div>
     <div class="copyright">
-      <p>&copy; 2025 CompuCentro Cobán | Todos los derechos reservados</p>
+      <p>&copy; 2025  Trabajo Educativo SVE | Todos los derechos reservados</p>
     </div>
   </footer>
 

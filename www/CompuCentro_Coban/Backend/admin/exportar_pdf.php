@@ -17,7 +17,7 @@ $options->set('isHtml5ParserEnabled', true);
 $options->set('isRemoteEnabled', true);
 $dompdf = new Dompdf($options);
 
-// ✅ Convertir logo en Base64 (SOLUCIÓN para que SIEMPRE aparezca)
+// Convertir logo en Base64 (SOLUCIÓN para que SIEMPRE aparezca)
 $logoPath = __DIR__ . "../../Frontend/IMG/logo_compucentr.png";
 $logoBase64 = "";
 if (file_exists($logoPath)) {

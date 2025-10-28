@@ -1,39 +1,31 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . '/../../src/PHP/PHPMailer/PHPMailer.php';
-require __DIR__ . '/../../src/PHP/PHPMailer/SMTP.php';
-require __DIR__ . '/../../src/PHP/PHPMailer/Exception.php';
+require_once 'PHPMailer/PHPMailer.php';
+require_once 'PHPMailer/SMTP.php';
+require_once 'PHPMailer/Exception.php';
 
-// ✅ Cargar .env correctamente
-$envPath = $_SERVER['DOCUMENT_ROOT'] . '/.env';
-
-if (!file_exists($envPath)) {
-    die("❌ ERROR: No se encontró el archivo .env en: $envPath");
-}
-
-$env = parse_ini_file($envPath);
-
-function crearMailer() {
-    global $env;
+/**
+ * Configuración general del correo para notificaciones
+ * de formularios (contacto, preinscripción, etc.)
+ */
+function crearMailer(): PHPMailer {
     $mail = new PHPMailer(true);
-
     $mail->isSMTP();
-    $mail->Host       = $env['MAIL_HOST'];
-    $mail->SMTPAuth   = true;
-    $mail->Username   = $env['MAIL_USERNAME'];
-    $mail->Password   = $env['MAIL_PASSWORD'];
-    $mail->SMTPSecure = 'tls'; 
-    $mail->Port       = $env['MAIL_PORT'];
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'tutyose77@gmail.com'; // tu correo
+    $mail->Password = 'ivskowvscglgksef';   // clave de aplicación (no la normal)
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = 587;
 
-    $mail->setFrom($env['MAIL_FROM'], $env['MAIL_FROM_NAME']);
+    // 💡 Importante: codificación correcta y sin debug visible
+    $mail->CharSet = 'UTF-8';
+    $mail->Encoding = 'base64';
+    $mail->SMTPDebug = 0; // Desactiva el log SMTP (para que el usuario no vea nada raro)
 
-    // Debug temporal
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-    $mail->Debugoutput = 'html';
-
+    $mail->setFrom('tutyose77@gmail.com', 'Formulario Web CompuCentro');
     return $mail;
 }
 ?>
