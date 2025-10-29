@@ -17,6 +17,8 @@ services:
       - JAVA_OPTS=-Djava.awt.headless=true
     depends_on:
       - sonarqube
+    networks:
+      - ci-network   # 🔹 Jenkins podrá ver a SonarQube y DB en esta red
 
   sonarqube:
     image: sonarqube:lts-community
@@ -29,6 +31,8 @@ services:
       - SONAR_JDBC_PASSWORD=sonar
     depends_on:
       - db
+    networks:
+      - ci-network   # 🔹 Misma red compartida
 
   db:
     image: postgres:15
@@ -39,7 +43,13 @@ services:
       - POSTGRES_DB=sonar
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - ci-network   # 🔹 Igual, misma red compartida
 
 volumes:
   jenkins_home:
   pgdata:
+
+networks:
+  ci-network:       # 🔹 Aquí se define la red que conecta todo
+    driver: bridge
