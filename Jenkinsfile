@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        SONARQUBE_SERVER = 'SonarQube'  // Nombre configurado en Jenkins > Manage Jenkins > SonarQube servers
+        SONARQUBE_SERVER = 'SonarQube'       // Nombre configurado en Jenkins > Manage Jenkins > SonarQube servers
+        SONAR_TOKEN = credentials('sonar-token') // Token guardado en Jenkins (tipo Secret text)
         REPORT_PATH = 'cicd/reportes'
         EMAIL = 'sele015vespino@gmail.com'
     }
@@ -10,20 +11,21 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                echo "📦 Descargando código desde GitHub..."
                 git branch: 'main', url: 'https://github.com/SelenaAM505/Compucentro_Versionamiento.git'
             }
         }
 
         stage('Análisis SonarQube') {
             steps {
+                echo "🔍 Ejecutando análisis de SonarQube..."
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh '''
                         sonar-scanner \
                         -Dsonar.projectKey=CompuCentro \
                         -Dsonar.sources=./www \
                         -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=admin \
-                        -Dsonar.password=admin
+                        -Dsonar.token=${SONAR_TOKEN}
                     '''
                 }
             }
@@ -31,6 +33,7 @@ pipeline {
 
         stage('Esperar Resultados') {
             steps {
+                echo "⏳ Esperando resultados de SonarQube..."
                 timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
@@ -39,22 +42,22 @@ pipeline {
 
         stage('Generar PDF') {
             steps {
+                echo "📄 Generando reporte PDF..."
                 sh '''
-                    echo "📄 Generando reporte PDF..."
-                    cd cicd/reportes
-                    curl -u admin:admin "http://sonarqube:9000/api/issues/search?componentKeys=CompuCentro" \
-                        | jq '.' > reporte.html
-                    pandoc reporte.html -o reporte.pdf --pdf-engine=wkhtmltopdf
+                    mkdir -p ${REPORT_PATH}
+                    curl -u admin:Holamundo12 "http://sonarqube:9000/api/issues/search?componentKeys=CompuCentro" \
+                        | jq '.' > ${REPORT_PATH}/reporte.html
+                    pandoc ${REPORT_PATH}/reporte.html -o ${REPORT_PATH}/reporte.pdf --pdf-engine=wkhtmltopdf
                 '''
             }
         }
 
         stage('Enviar Correo') {
             steps {
+                echo "📧 Enviando correo con el reporte..."
                 sh '''
-                    echo "📧 Enviando correo con el reporte..."
                     echo "Adjunto el reporte de análisis de SonarQube." \
-                    | mail -s "Reporte CI/CD - CompuCentro" -A cicd/reportes/reporte.pdf ${EMAIL}
+                    | mail -s "Reporte CI/CD - CompuCentro" -A ${REPORT_PATH}/reporte.pdf ${EMAIL}
                 '''
             }
         }
