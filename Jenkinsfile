@@ -12,6 +12,7 @@ pipeline {
     }
 
     stages {
+
         stage('Clonar Repositorio') {
             steps {
                 echo "📦 Clonando el repositorio de GitHub..."
@@ -23,7 +24,7 @@ pipeline {
 
         stage('Análisis con SonarQube') {
             steps {
-                echo "🔍 Iniciando análisis de código con SonarQube..."
+                echo "🔍 Iniciando análisis de código..."
                 withSonarQubeEnv(SONARQUBE_SERVER) {
                     sh '''
                         sonar-scanner \
@@ -36,11 +37,11 @@ pipeline {
             }
         }
 
-        stage('Esperar Resultado de Análisis') {
+        stage('Esperar Resultado de SonarQube') {
             steps {
                 script {
-                    echo "⏳ Esperando resultados de calidad de SonarQube..."
-                    timeout(time: 15, unit: 'MINUTES') {
+                    echo "⏳ Esperando resultados..."
+                    timeout(time: 10, unit: 'MINUTES') {
                         waitForQualityGate abortPipeline: false
                     }
                 }
@@ -49,22 +50,22 @@ pipeline {
 
         stage('Construir y Desplegar con Docker') {
             steps {
-                echo "🐳 Construyendo e iniciando contenedores Docker..."
+                echo "🐳 Desplegando aplicación..."
                 sh '''
-                    docker compose down || true
-                    docker compose up -d --build
+                    docker-compose down || true
+                    docker-compose up -d --build
                 '''
             }
         }
 
-        stage('Verificar Despliegue') {
+        stage('Verificar Sitio Web') {
             steps {
-                echo "✅ Verificando que el sitio esté en línea..."
+                echo "✅ Probando que el sitio esté accesible..."
                 sh '''
                     if curl -f http://localhost:8081 > /dev/null 2>&1; then
                         echo '🌐 Sitio operativo correctamente.'
                     else
-                        echo '❌ Error al verificar el despliegue'
+                        echo '❌ No se pudo acceder al sitio.'
                     fi
                 '''
             }
@@ -75,26 +76,32 @@ pipeline {
         always {
             script {
                 def estado = currentBuild.currentResult
+                echo "🧾 Generando reporte final (PLAN B)..."
 
-                echo "🧾 Generando reporte final..."
-
-                sh '''
+                sh """
                     mkdir -p reports
 
-                    echo "# 📋 Reporte de Ejecución Jenkins" > reports/reporte.md
+                    echo "# 📋 Reporte Final de CI/CD" > reports/reporte.md
                     echo "**Proyecto:** CompuCentro Cobán WebApp" >> reports/reporte.md
-                    echo "**Fecha:** $(date)" >> reports/reporte.md
-                    echo "**Estado del Pipeline:** '''${estado}'''" >> reports/reporte.md
-                    echo "\n---\n## Resultados de SonarQube" >> reports/reporte.md
+                    echo "**Fecha:** \$(date)" >> reports/reporte.md
+                    echo "**Estado del Pipeline:** ${estado}" >> reports/reporte.md
+                    echo "\\n---\\n## Resultados de SonarQube" >> reports/reporte.md
 
                     curl -s -u $SONARQUBE_TOKEN: \
                         "http://sonarqube:9000/api/measures/component?component=compucentro&metricKeys=bugs,vulnerabilities,code_smells,duplicated_lines_density,coverage" \
-                        | jq -r '.component.measures[] | "- **\(.metric):** \(.value)"' >> reports/reporte.md
+                        | jq -r ".component.measures[] | \"- **\\(.metric):** \\(.value)\"" >> reports/reporte.md
+                """
 
-                '''
-
-                archiveArtifacts artifacts: "reports/*.md", fingerprint: true
+                archiveArtifacts artifacts: "reports/reporte.md", fingerprint: true
             }
+        }
+
+        success {
+            echo "🎉 Pipeline completado correctamente."
+        }
+
+        failure {
+            echo "⚠️ El pipeline falló, pero el reporte se generó con éxito."
         }
     }
 }
