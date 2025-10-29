@@ -4,12 +4,13 @@ pipeline {
     environment {
         SONARQUBE_SERVER = 'SonarQube'  // Nombre configurado en Jenkins > Manage Jenkins > SonarQube servers
         REPORT_PATH = 'cicd/reportes'
-        EMAIL = 'sele015vespinogmail.com'
+        EMAIL = 'sele015vespino@gmail.com'
+    }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/TU_USUARIO/TU_REPO.git'
+                git branch: 'main', url: 'https://github.com/SelenaAM505/Compucentro_Versionamiento.git'
             }
         }
 
@@ -65,4 +66,3 @@ pipeline {
         }
     }
 }
-
