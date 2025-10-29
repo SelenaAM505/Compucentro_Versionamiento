@@ -1,68 +1,48 @@
 \documentclass[12pt]{article}
-
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{geometry}
-\geometry{margin=2.5cm}
-
 \usepackage{setspace}
-\onehalfspacing
-
-\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{letterpaper, margin=1in}
 \usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{fontspec}
 
-% Formato de títulos
-\titleformat{\section}{\bfseries\large}{\thesection.}{0.5em}{}
-\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection.}{0.5em}{}
+% Fuente estándar (sin Times New Roman para evitar error)
+\setmainfont{Latin Modern Roman}
+
+% Títulos elegantes
+\titleformat{\section}{\bfseries\large}{}{0em}{}
 
 \begin{document}
 
-% ------------------ PORTADA ------------------
-\begin{titlepage}
-\centering
+\begin{center}
+{\large \textbf{Reporte de Ejecución del Pipeline CI/CD}}\\[6pt]
+\textbf{Proyecto: CompuCentro Cobán WebApp}\\[6pt]
+\textbf{Fecha de generación:} \today
+\end{center}
 
-{\large \textbf{REPORTE DE CALIDAD DE CÓDIGO}}\\[0.5cm]
-{\large Generado automáticamente por el Pipeline CI/CD}\\[3cm]
+\section*{Estado General del Pipeline}
+$estado$
 
-{\large \textbf{Proyecto:} CompuCentro Cobán WebApp}\\[0.5cm]
-{\large \textbf{Fecha:} \today}\\[4cm]
-
-\rule{\linewidth}{0.5mm}\\[0.4cm]
-{\large \textit{Jenkins + SonarQube + Pandoc}}\\
-\rule{\linewidth}{0.5mm}\\[2.5cm]
-
-\end{titlepage}
-
-% ------------------ CONTENIDO ------------------
-
-\section*{Resumen General}
-Este documento presenta los resultados del análisis automatizado de calidad de código
-realizado a través de una arquitectura de Integración Continua (CI/CD). El proceso fue
-gestionado mediante \textbf{Jenkins}, se ejecutó el análisis estático empleando 
-\textbf{SonarQube} y posteriormente se generó este informe mediante
-\textbf{Pandoc} y \LaTeX.
-
-\section*{Resultados de SonarQube}
-A continuación se listan los indicadores obtenidos:
-
+\section*{Resumen de Calidad (SonarQube)}
 \begin{itemize}
 $body$
 \end{itemize}
 
-\section*{Interpretación}
-Un estado \textbf{PASSED} indica que el proyecto cumple con las reglas de calidad.
-Un estado \textbf{FAILED} implica que deben corregirse aspectos del código, tales como:
-mantenibilidad, complejidad, seguridad o duplicación.
+\section*{Interpretación de Resultados}
+Este reporte fue generado automáticamente como parte del proceso de Integración y Despliegue Continuo (CI/CD).  
+Los valores anteriores permiten evaluar aspectos de calidad como:
+\begin{itemize}
+\item \textbf{Bugs}: Errores críticos de funcionamiento.
+\item \textbf{Vulnerabilidades}: Riesgos de seguridad detectados.
+\item \textbf{Code Smells}: Problemas de mantenibilidad.
+\item \textbf{Duplicación}: Porcentaje de código repetido.
+\item \textbf{Cobertura}: Nivel de pruebas automatizadas presentes.
+\end{itemize}
 
 \section*{Conclusión}
-Este informe permite identificar áreas de mejora en el software, promoviendo buenas
-prácticas de desarrollo y calidad continua. Se recomienda realizar análisis periódicos
-como parte del ciclo de vida de desarrollo.
-
-\vfill
-\begin{center}
-\textit{Documento generado automáticamente por el pipeline CI/CD.}
-\end{center}
+Este reporte contribuye al control de calidad dentro del ciclo DevOps implementado, 
+permitiendo una supervisión constante del estado del software y facilitando su mejora continua.
 
 \end{document}
