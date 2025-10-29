@@ -2,85 +2,67 @@ pipeline {
     agent any
 
     environment {
-        SONARQUBE_SERVER = "SonarQubeServer"
-        SONARQUBE_TOKEN  = credentials('sonarqube-token')
-    }
+        SONARQUBE_SERVER = 'SonarQube'  // Nombre configurado en Jenkins > Manage Jenkins > SonarQube servers
+        REPORT_PATH = 'cicd/reportes'
+        EMAIL = 'sele015vespinogmail.com'
 
     stages {
-
-        stage('Clonar Repositorio') {
+        stage('Checkout') {
             steps {
-                echo "📦 Clonando el repositorio..."
-                git branch: 'main',
-                    credentialsId: 'github-token',
-                    url: 'https://github.com/SelenaAM505/Compucentro_Versionamiento.git'
+                git branch: 'main', url: 'https://github.com/TU_USUARIO/TU_REPO.git'
             }
         }
 
-        stage('Análisis con SonarQube') {
+        stage('Análisis SonarQube') {
             steps {
-                echo "🔍 Analizando código..."
-                withSonarQubeEnv(SONARQUBE_SERVER) {
-                    sh """
+                withSonarQubeEnv("${SONARQUBE_SERVER}") {
+                    sh '''
                         sonar-scanner \
-                            -Dsonar.projectKey=compucentro \
-                            -Dsonar.sources=www/CompuCentro_Coban \
-                            -Dsonar.host.url=http://sonarqube:9000 \
-                            -Dsonar.token=$SONARQUBE_TOKEN
-                    """
+                        -Dsonar.projectKey=CompuCentro \
+                        -Dsonar.sources=./www \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=admin \
+                        -Dsonar.password=admin
+                    '''
                 }
             }
         }
 
         stage('Esperar Resultados') {
             steps {
-                script {
-                    echo "⏳ Esperando Quality Gate..."
-                    timeout(time: 10, unit: 'MINUTES') {
-                        waitForQualityGate abortPipeline: false
-                    }
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
                 }
             }
         }
 
-        stage('Desplegar con Docker') {
+        stage('Generar PDF') {
             steps {
-                echo "🐳 Levantando contenedores..."
-                sh """
-                    docker compose down || true
-                    docker compose up -d --build
-                """
+                sh '''
+                    echo "📄 Generando reporte PDF..."
+                    cd cicd/reportes
+                    curl -u admin:admin "http://sonarqube:9000/api/issues/search?componentKeys=CompuCentro" \
+                        | jq '.' > reporte.html
+                    pandoc reporte.html -o reporte.pdf --pdf-engine=wkhtmltopdf
+                '''
+            }
+        }
+
+        stage('Enviar Correo') {
+            steps {
+                sh '''
+                    echo "📧 Enviando correo con el reporte..."
+                    echo "Adjunto el reporte de análisis de SonarQube." \
+                    | mail -s "Reporte CI/CD - CompuCentro" -A cicd/reportes/reporte.pdf ${EMAIL}
+                '''
             }
         }
     }
 
     post {
         always {
-            echo "🧾 Generando reporte final..."
-
-            sh """
-                mkdir -p reports
-
-                echo "# 📋 Reporte Final de CI/CD" > reports/reporte.md
-                echo "**Proyecto:** CompuCentro Cobán WebApp" >> reports/reporte.md
-                echo "**Fecha:** \$(date)" >> reports/reporte.md
-                echo "**Estado del Pipeline:** ${currentBuild.currentResult}" >> reports/reporte.md
-                echo "" >> reports/reporte.md
-                echo "## Resultados de SonarQube:" >> reports/reporte.md
-
-                curl -s -u $SONARQUBE_TOKEN: "http://sonarqube:9000/api/measures/component?component=compucentro&metricKeys=bugs,vulnerabilities,code_smells,duplicated_lines_density,coverage" \
-                | jq -r '.component.measures[] | "- " + .metric + ": " + .value' >> reports/reporte.md
-            """
-
-            archiveArtifacts artifacts: "reports/reporte.md", fingerprint: true
-        }
-
-        success {
-            echo "✅ Pipeline finalizó correctamente."
-        }
-
-        failure {
-            echo "⚠️ Pipeline falló pero el reporte está listo."
+            echo '🔔 Pipeline finalizado.'
         }
     }
 }
+
